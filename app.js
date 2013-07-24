@@ -17,7 +17,7 @@ app.router.get('/', function () {
 	res.end('<html><body><h1>hello!</h1><p>' + moment().zone("-07:00").format("dddd, MMMM Do YYYY, h:mm:ss a") + '</p></body></html>');
 });
 
-app.start(8080, function (err) {
+app.start(3000, function (err) {
 	if (err) {
 		throw err;
 	}
