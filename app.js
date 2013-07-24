@@ -1,6 +1,7 @@
 var flatiron = require('flatiron'),
     path = require('path'),
     moment = require('moment'),
+    plate = require('plates'),
     app = flatiron.app;
 
 app.config.file({ file: path.join(__dirname, 'config', 'config.json') });
