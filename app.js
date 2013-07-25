@@ -1,32 +1,20 @@
-var flatiron = require('flatiron'),
-    path = require('path'),
+var express = require('express'),
     moment = require('moment'),
     plates = require('plates'),
     fs = require('fs'),
-    app = flatiron.app;
+    app = express();
 
-app.config.file({ file: path.join(__dirname, 'config', 'config.json') });
-
-var template = fs.readFileSync("base.html", "utf-8");
-
-app.use(flatiron.plugins.http);
+var template = fs.readFileSync("templates/base.html", "utf-8");
 
 // root GET
-app.router.get('/', function () {
-	var req = this.req,
-		res = this.res;
-
-	// app.log.info('Saying hello!');
-
-	res.writeHead(200, {'content-type': 'text/html'});
-	res.end(plates.bind(template, {main: "<span id='datetime'>" + moment().zone("-07:00").format("dddd, MMMM Do YYYY, h:mm:ss a") + "</span>"}));
+app.get('/', function ( req, res ) {
+	var body = plates.bind(template, {main: "Hello from the index page."});
+	res.setHeader('Content-Type', 'text/html');
+	res.setHeader('Content-Length', body.length);
+	res.end(body);
 });
 
-app.start(process.env.PORT || 8080, function (err) {
-	if (err) {
-		throw err;
-	}
+// static server
+app.use('/public', express.static('public'));
 
-	// var addr = app.server.address();
-	// app.log.info('Listening on http://' + addr.address + ':' + addr.port);
-});
+app.listen(process.env.PORT || 8080);
