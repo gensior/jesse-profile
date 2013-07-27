@@ -6,7 +6,10 @@
     "moment": "2.1.0",
     "plates": "0.4.8",
     "express": "3.x",
-    "aws-sdk": "1.4.1"
+    "aws-sdk": "1.4.1",
+    "vogels": "0.4.0",
+    "lodash": "1.3.1",
+    "util": "0.4.9"
   },
   "devDependencies": {
     "api-easy": "0.3.2",
