@@ -5,7 +5,8 @@
   "dependencies": {
     "moment": "2.1.0",
     "plates": "0.4.8",
-    "express": "3.x"
+    "express": "3.x",
+    "aws-sdk": "1.4.1"
   },
   "devDependencies": {
     "api-easy": "0.3.2",
