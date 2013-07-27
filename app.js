@@ -25,13 +25,18 @@ app.get('/dynamo', function (req, res) {
 	var body = "";
 	res.setHeader('Content-Type', 'text/html');
 	db.listTables(function (err, data) {
-		var arr = data.TableNames;
-		var length = arr.length,
-			element = null;
-		for (var i=0; i<length; i++) {
-			element = arr[i];
-			body = body + element + '<br />';
+		if (!err) {
+			var arr = data.TableNames;
+			var length = arr.length,
+				element = null;
+			for (var i=0; i<length; i++) {
+				element = arr[i];
+				body = body + element + '<br />';
+			}
+		} else {
+			body = err;
 		}
+		console.log(err);
 		res.end(plates.bind(template, {main: body}));
 	});
 });
