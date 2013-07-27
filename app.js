@@ -5,9 +5,9 @@ var express = require('express'),
     AWS = require('aws-sdk'),
     app = express();
 
-// AWS.config.update({credentials: {accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY}});
+AWS.config.update({credentials: {accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_KEY}});
 AWS.config.update({region: 'us-west-2'});
-var db = new AWS.DynamoDB({apiVersion: '2012-04-04'});
+var db = new AWS.DynamoDB();
 
 var template = fs.readFileSync("templates/base.html", "utf-8");
 
@@ -37,6 +37,7 @@ app.get('/dynamo', function (req, res) {
 			body = err;
 			console.log(err);
 		}
+		console.log(process.env);
 		res.end(plates.bind(template, {main: body}));
 	});
 });
