@@ -37,7 +37,7 @@ app.get('/dynamo', function (req, res) {
 			body = err;
 			console.log(err);
 		}
-		console.log(process.env);
+		// console.log(process.env);
 		res.end(plates.bind(template, {main: body}));
 	});
 });
