@@ -46,7 +46,7 @@ var printResults = function (err, resp) {
 // Test dynamoDB
 app.get('/dynamo', function (req, res) {
 	res.setHeader('Content-Type', 'text/html');
-	Post.get(1, function (err, post) {
+	Post.get(2, function (err, post) {
 		return res.end(plates.bind(template, {main: post.get('title')}));
 	});
 	// db.listTables(function (err, data) {
