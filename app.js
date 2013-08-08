@@ -35,35 +35,25 @@ Post.config({tableName: 'posts'});
 
 var printResults = function (err, resp) {
 	if (err) {
-		console.log(err);
+		return err;
 	} else {
-		console.log('Found', resp.Count, 'items');
-		console.log(resp.Items[0].attrs);
-	    return resp;
+		// var posts = _.pluck(resp.Items, 'attrs');
+		// return res.end(plates.bind(template, {title: posts.title, body: posts.body}));
+		return util.inspect(_.pluck(resp.Items, 'attrs'));
 	}
 }
 
 // Test dynamoDB
 app.get('/dynamo', function (req, res) {
 	res.setHeader('Content-Type', 'text/html');
-	Post.get(2, function (err, post) {
-		return res.end(plates.bind(template, {main: post.get('title')}));
+	var posts = Post.scan().loadAll().exec(function (err, resp) {
+		var posts = _.pluck(resp.Items, 'attrs');
+		var html = '<h2 class="title"></h2><h3 class="created"></h3><p class="body"></p>';
+		var rendered = plates.bind(html, posts);
+		return res.end(plates.bind(template, {main: rendered}));
 	});
-	// db.listTables(function (err, data) {
-	// 	if (!err) {
-	// 		var arr = data.TableNames;
-	// 		var length = arr.length,
-	// 			element = null;
-	// 		for (var i=0; i<length; i++) {
-	// 			element = arr[i];
-	// 			body = body + element + '<br />';
-	// 		}
-	// 	} else {
-	// 		body = err;
-	// 		console.log(err);
-	// 	}
-	// 	// console.log(process.env);
-	// 	res.end(plates.bind(template, {main: body}));
+	// Post.get(2, function (err, post) {
+	// 	return res.end(plates.bind(template, {main: post.get('title')}));
 	// });
 });
 
